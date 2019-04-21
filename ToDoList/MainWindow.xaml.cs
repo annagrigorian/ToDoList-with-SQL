@@ -36,5 +36,25 @@ namespace ToDoList
                 textBox.Text = "";
             }
         }
+
+        private void AllButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ActiveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearCompletedButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

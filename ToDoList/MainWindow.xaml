@@ -9,10 +9,9 @@
     <Grid>
         <TextBox Name="textBox" HorizontalAlignment="Left" Height="24" Margin="83,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" KeyDown="TextBox_KeyDown"/>
         <ListBox Name="listBox" HorizontalAlignment="Left" Height="100" Margin="83,97,0,0" VerticalAlignment="Top" Width="278" Visibility="Collapsed"/>
-        <Button Content="All" HorizontalAlignment="Left" Margin="380,54,0,0" VerticalAlignment="Top" Width="38"/>
-        <Button Content="Active" HorizontalAlignment="Left" Margin="380,82,0,0" VerticalAlignment="Top" Width="57"/>
-        <Button Content="Completed" HorizontalAlignment="Left" Margin="380,107,0,0" VerticalAlignment="Top" Width="76"/>
-        <Button Content="Clear Completed" HorizontalAlignment="Left" Margin="380,132,0,0" VerticalAlignment="Top" Width="92"  Visibility="Collapsed"/>
-
+        <Button Content="All" HorizontalAlignment="Left" Margin="380,54,0,0" VerticalAlignment="Top" Width="38" Click="AllButton_Click"/>
+        <Button Content="Active" HorizontalAlignment="Left" Margin="380,82,0,0" VerticalAlignment="Top" Width="57" Click="ActiveButton_Click"/>
+        <Button Content="Completed" HorizontalAlignment="Left" Margin="380,107,0,0" VerticalAlignment="Top" Width="76" Click="CompletedButton_Click"/>
+        <Button Content="Clear Completed" HorizontalAlignment="Left" Margin="380,132,0,0" VerticalAlignment="Top" Width="92" Click="ClearCompletedButton_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>
