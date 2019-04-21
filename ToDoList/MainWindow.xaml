@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="779">
+    <Grid RenderTransformOrigin="0.497,0.473" HorizontalAlignment="Left" Width="775">
         <TextBox Name="textBox" HorizontalAlignment="Left" Height="24" Margin="83,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" KeyDown="TextBox_KeyDown"/>
         <ListBox Name="listBox" HorizontalAlignment="Left" Height="100" Margin="83,97,0,0" VerticalAlignment="Top" Width="278" Visibility="Collapsed"/>
         <Button Content="All" HorizontalAlignment="Left" Margin="380,54,0,0" VerticalAlignment="Top" Width="38" Click="AllButton_Click"/>

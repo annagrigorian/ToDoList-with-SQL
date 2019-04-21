@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace ToDoList
 {
@@ -20,26 +22,61 @@ namespace ToDoList
     /// </summary>
     public partial class MainWindow : Window
     {
+        string connectionstring = "Data Source=(local);"
+                                + "Initial Catalog=ToDoList;"
+                                + "Integrated Security=true;";  
+
         public MainWindow()
         {
-            InitializeComponent();
-        }
-
-       
+            InitializeComponent();                    
+        }     
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                listBox.Visibility = Visibility.Visible;
-                listBox.Items.Add(textBox.Text);
-                textBox.Text = "";
+                using (SqlConnection connection = new SqlConnection(connectionstring))
+                {
+                    try
+                    {
+                        connection.Open();
+                        SqlCommand add = new SqlCommand("Insert into ToDoList(Title) Values(textBox.Text)", connection);
+                        //connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                textBox.Text = "";                        
             }
         }
 
         private void AllButton_Click(object sender, RoutedEventArgs e)
         {
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                listBox.Visibility = Visibility.Visible;                
+                SqlCommand command = new SqlCommand("SELECT Title FROM Items", connection);
 
+                try
+                {
+                    connection.Open();
+                    listBox.Items.Add("sdfsdf");
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        listBox.Items.Add(reader[0]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+               
+            }
+            
         }
 
         private void ActiveButton_Click(object sender, RoutedEventArgs e)
@@ -52,7 +89,7 @@ namespace ToDoList
 
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void CompletedButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
