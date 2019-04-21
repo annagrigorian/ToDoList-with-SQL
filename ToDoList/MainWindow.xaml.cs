@@ -25,9 +25,16 @@ namespace ToDoList
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
+       
 
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                listBox.Visibility = Visibility.Visible;
+                listBox.Items.Add(textBox.Text);
+                textBox.Text = "";
+            }
         }
     }
 }
