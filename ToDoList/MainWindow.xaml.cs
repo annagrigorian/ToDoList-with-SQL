@@ -22,13 +22,11 @@ namespace ToDoList
     /// </summary>
     public partial class MainWindow : Window
     {
-        string connectionstring = "Data Source=(local);"
-                                + "Initial Catalog=ToDoList;"
-                                + "Integrated Security=true;";  
+        string connectionstring = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog = ToDoList; Integrated Security = True";
 
         public MainWindow()
         {
-            InitializeComponent();                    
+            InitializeComponent();
         }     
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -39,9 +37,13 @@ namespace ToDoList
                 {
                     try
                     {
+                        string text = textBox.Text;
                         connection.Open();
-                        SqlCommand add = new SqlCommand("Insert into ToDoList(Title) Values(textBox.Text)", connection);
-                        //connection.Close();
+                        string queryingstring = $"Insert into Items(Title) Values({text})";
+                        SqlCommand add = new SqlCommand(queryingstring, connection);
+                        //connection.Open();
+
+                        add.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -62,7 +64,32 @@ namespace ToDoList
                 try
                 {
                     connection.Open();
-                    listBox.Items.Add("sdfsdf");
+                    //listBox.Items.Add("sdfsdf");
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        listBox.Items.Add(reader[0]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }               
+            }            
+        }
+
+        private void ActiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                listBox.Visibility = Visibility.Visible;
+                SqlCommand command = new SqlCommand("SELECT Title FROM Items where IsCompleted=0", connection);
+
+                try
+                {
+                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -74,15 +101,9 @@ namespace ToDoList
                 {
                     MessageBox.Show(ex.Message);
                 }
-               
             }
-            
-        }
-
-        private void ActiveButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
+    }
 
         private void ClearCompletedButton_Click(object sender, RoutedEventArgs e)
         {
@@ -91,7 +112,28 @@ namespace ToDoList
 
         private void CompletedButton_Click(object sender, RoutedEventArgs e)
         {
+            listBox.Items.Clear();
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                listBox.Visibility = Visibility.Visible;
+                SqlCommand command = new SqlCommand("SELECT Title FROM Items where IsCompleted=1 ", connection);
 
+                try
+                {
+                    connection.Open();
+                    //listBox.Items.Add("sdfsdf");
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        listBox.Items.Add(reader[0]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }
