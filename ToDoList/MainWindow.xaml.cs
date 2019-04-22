@@ -39,7 +39,7 @@ namespace ToDoList
                     {
                         string text = textBox.Text;
                         connection.Open();
-                        string queryingstring = $"Insert into Items(Title) Values({text})";
+                        string queryingstring = $"Insert into Items(Title) Values('{text}')";
                         SqlCommand add = new SqlCommand(queryingstring, connection);
                         //connection.Open();
 
@@ -121,12 +121,13 @@ namespace ToDoList
                 try
                 {
                     connection.Open();
-                    //listBox.Items.Add("sdfsdf");
                     SqlDataReader reader = command.ExecuteReader();
+
                     while (reader.Read())
                     {
-                        listBox.Items.Add(reader[0]);
+                        listBox.Items.Add(reader[0].ToString());
                     }
+
                     reader.Close();
                 }
                 catch (Exception ex)
