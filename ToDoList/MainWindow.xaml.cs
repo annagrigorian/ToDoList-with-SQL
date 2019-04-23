@@ -22,6 +22,10 @@ namespace ToDoList
     /// </summary>
     public partial class MainWindow : Window
     {
+        public delegate void CheckedChanged();
+
+        public CheckedChanged OnCheckedChanged;
+
         string connectionstring = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog = ToDoList; Integrated Security = True";
 
         public MainWindow()
@@ -41,8 +45,6 @@ namespace ToDoList
                         connection.Open();
                         string queryingstring = $"Insert into Items(Title) Values('{text}')";
                         SqlCommand add = new SqlCommand(queryingstring, connection);
-                        //connection.Open();
-
                         add.ExecuteNonQuery();
                     }
                     catch (Exception ex)
@@ -63,12 +65,13 @@ namespace ToDoList
 
                 try
                 {
-                    connection.Open();
-                    //listBox.Items.Add("sdfsdf");
+                    connection.Open();                   
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        listBox.Items.Add(reader[0]);
+                        CheckBox item = new CheckBox();
+                        item.Content = reader[0];
+                        listBox.Items.Add(item);
                     }
                     reader.Close();
                 }
@@ -78,7 +81,7 @@ namespace ToDoList
                 }               
             }            
         }
-
+       
         private void ActiveButton_Click(object sender, RoutedEventArgs e)
         {
             listBox.Items.Clear();
@@ -93,7 +96,9 @@ namespace ToDoList
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        listBox.Items.Add(reader[0]);
+                        CheckBox item = new CheckBox();
+                        item.Content = reader[0];
+                        listBox.Items.Add(item);
                     }
                     reader.Close();
                 }
@@ -105,10 +110,47 @@ namespace ToDoList
         
     }
 
+        private void CheckBox_CheckedChanged()
+        {
+            List<CheckBox> selectedItems = new List<CheckBox>();
+
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                foreach (var item in listBox.Items)
+                {
+                    CheckBox ch = (CheckBox)item;
+                    if (ch.IsChecked == true)
+                    {
+                        SqlCommand command = new SqlCommand($"Update Items set IsCompleted = 1 where Title = '{ch.Content}'");
+                    }
+                    else
+                    {
+                        SqlCommand command = new SqlCommand($"Update Items set IsCompleted = 0 where Title = '{ch.Content}'");
+                    }
+                }
+            }          
+        }
+
         private void ClearCompletedButton_Click(object sender, RoutedEventArgs e)
         {
+            listBox.Items.Clear();
 
-        }
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {              
+
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("Delete From Items where IsCompleted = 1", connection);
+                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }      
 
         private void CompletedButton_Click(object sender, RoutedEventArgs e)
         {
@@ -125,7 +167,9 @@ namespace ToDoList
 
                     while (reader.Read())
                     {
-                        listBox.Items.Add(reader[0].ToString());
+                        CheckBox item = new CheckBox();
+                        item.Content = reader[0];
+                        listBox.Items.Add(item);
                     }
 
                     reader.Close();

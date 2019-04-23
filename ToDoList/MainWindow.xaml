@@ -13,5 +13,6 @@
         <Button Content="Active" HorizontalAlignment="Left" Margin="380,82,0,0" VerticalAlignment="Top" Width="57" Click="ActiveButton_Click"/>
         <Button Content="Completed" HorizontalAlignment="Left" Margin="380,107,0,0" VerticalAlignment="Top" Width="76" Click="CompletedButton_Click"/>
         <Button Content="Clear Completed" HorizontalAlignment="Left" Margin="380,132,0,0" VerticalAlignment="Top" Width="92" Click="ClearCompletedButton_Click" Visibility="Collapsed"/>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="83,202,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
