@@ -22,9 +22,9 @@ namespace ToDoList
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void CheckedChanged();
+        //public delegate void CheckedChanged();
 
-        public CheckedChanged OnCheckedChanged;
+        //public CheckedChanged OnCheckedChanged;
 
         string connectionstring = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog = ToDoList; Integrated Security = True";
 
